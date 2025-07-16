@@ -36,4 +36,14 @@ export class UserService {
   deleteUser(id: number): Observable<{ message: string }> {
     return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`);
   }
+  getUserById(id: number): Observable<UserDTO> {
+    return this.http.get<UserDTO>(`${this.apiUrl}/${id}`);
+  }
+
+  updateUser(id: number, userData: any): Observable<UserDTO> {
+    return this.http.put<UserDTO>(`${this.apiUrl}/${id}`, userData);
+  }
+  searchUsers(username: string) {
+    return this.http.get<any[]>(`${this.apiUrl}/search?username=${username}`);
+  }
 }

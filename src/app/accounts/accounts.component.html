@@ -40,7 +40,7 @@
           </ng-template>
 
           <!-- Account details -->
-          <ng-container *ngIf="accountObservable | async as accountDetails; else error_template">
+          <ng-container *ngIf="accountObservable | async as accountDetails; else errorBlock">
             <div class="mb-3">
               <strong>Account Id:</strong> {{ accountDetails.accountId }}
             </div>
@@ -88,6 +88,11 @@
 
             </nav>
           </ng-container>
+          <ng-template #errorBlock>
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>

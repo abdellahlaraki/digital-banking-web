@@ -13,6 +13,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {ProfileComponent} from './profile/profile.component';
 import {UsersComponent} from './users/users.component';
 import {NewUserComponent} from './new-user/new-user.component';
+import {EditUserComponent} from './edit-user/edit-user.component';
 
 export const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -27,7 +28,8 @@ export const routes: Routes = [
       {path:"new-customer-account/:id",component:NewCustomerAccountComponent},
       {path:"profile",component:ProfileComponent},
       {path:"users",component:UsersComponent},
-      {path:"new-user",component:NewUserComponent}
+      {path:"new-user",component:NewUserComponent},
+      {path:"edit-user/:id",component:EditUserComponent}
 
     ]
   },

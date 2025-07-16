@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {UserService} from '../services/user.service';
 import {FormsModule} from '@angular/forms';
-import {NgIf} from '@angular/common';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
 interface Role {
   id: number;
   roleName: string;
@@ -18,7 +18,9 @@ interface User {
   selector: 'app-profile',
   imports: [
     FormsModule,
-    NgIf
+    NgIf,
+    NgClass,
+    NgForOf
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'

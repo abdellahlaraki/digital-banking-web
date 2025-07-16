@@ -1,0 +1,25 @@
+<div class="container mt-4">
+  <h3>Edit User</h3>
+
+  <form *ngIf="userForm" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <input formControlName="username" class="form-control" />
+    </div>
+
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" formControlName="enabled" />
+      <label class="form-check-label">Enabled</label>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Roles</label>
+      <select formControlName="roles" class="form-select" multiple>
+        <option *ngFor="let role of allRoles" [value]="role">{{ role }}</option>
+      </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Update</button>
+  </form>
+</div>

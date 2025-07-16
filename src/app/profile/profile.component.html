@@ -1,28 +1,47 @@
-<div class="container mt-4">
+<div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
+    <div class="col-md-7">
+      <div class="card shadow-sm border-0">
+        <!-- 🔒 Profile Header -->
+        <div class="card-header bg-primary text-white d-flex align-items-center">
+          <i class="bi bi-person-circle me-2 fs-4"></i>
           <h5 class="mb-0">User Profile</h5>
         </div>
-        <div class="card-body">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Username:</strong> admin</li>
-            <li class="list-group-item">
-              <strong>Enabled:</strong>
-              <span class="badge bg-success">Yes</span>
-            </li>
-            <li class="list-group-item">
-              <strong>Roles:</strong>
-              <span class="badge bg-secondary me-1">USER</span>
-              <span class="badge bg-secondary">ADMIN</span>
-            </li>
-          </ul>
+
+        <!-- 👤 Profile Details -->
+        <div class="card-body" *ngIf="user">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Username</label>
+            <div>{{ user.username }}</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Enabled</label>
+            <div>
+              <span class="badge" [ngClass]="user.enabled ? 'bg-success' : 'bg-danger'">
+                <i class="bi" [ngClass]="user.enabled ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+                {{ user.enabled ? 'Yes' : 'No' }}
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <label class="form-label fw-bold">Roles</label>
+            <div>
+              <ng-container *ngFor="let role of user.roles">
+                <span class="badge bg-secondary me-1 mb-1">
+                  <i class="bi bi-shield-lock-fill me-1"></i>{{ role }}
+                </span>
+              </ng-container>
+            </div>
+          </div>
         </div>
 
         <!-- 🔐 Password Change Section -->
         <div class="card-body border-top">
-          <h6 class="mb-3">Changer le mot de passe</h6>
+          <h6 class="mb-3">
+            <i class="bi bi-key me-2"></i>Changer le mot de passe
+          </h6>
           <form (ngSubmit)="changePassword()" #passwordForm="ngForm">
             <div class="mb-3">
               <label for="oldPassword" class="form-label">Ancien mot de passe</label>
@@ -36,8 +55,8 @@
                      [(ngModel)]="passwordData.newPassword" name="newPassword" required>
             </div>
 
-            <button type="submit" class="btn btn-outline-primary w-100" [disabled]="passwordForm.invalid">
-              Mettre à jour le mot de passe
+            <button type="submit" class="btn btn-primary w-100" [disabled]="passwordForm.invalid">
+              <i class="bi bi-shield-lock me-1"></i> Mettre à jour le mot de passe
             </button>
           </form>
 

@@ -1,14 +1,32 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="mb-0">Users</h2>
-    <a  routerLink="/admin/new-user" class="btn btn-primary">
+    <a routerLink="/admin/new-user" class="btn btn-primary">
       <i class="bi bi-plus-lg me-1"></i> New User
     </a>
   </div>
+
+  <!-- 🔍 Search input -->
+  <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchUsers()" class="mb-3">
+    <div class="input-group">
+      <input
+        type="text"
+        formControlName="keyword"
+        class="form-control"
+        placeholder="Search by username..."
+        aria-label="Search users"
+      />
+      <button class="btn btn-outline-info" type="submit" aria-label="Search">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </form>
+
+
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>ID</th><th>Username</th><th>Enabled</th><th>Roles</th> <th>Action</th>
+      <th>ID</th><th>Username</th><th>Enabled</th><th>Roles</th><th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -16,21 +34,25 @@
       <td>{{user.id}}</td>
       <td>{{user.username}}</td>
       <td>
-        <span [ngClass]="user.enabled ? 'text-success' : 'text-danger'">
-          {{ user.enabled ? 'Yes' : 'No' }}
-        </span>
+          <span [ngClass]="user.enabled ? 'text-success' : 'text-danger'">
+            {{ user.enabled ? 'Yes' : 'No' }}
+          </span>
       </td>
       <td>
         <span *ngFor="let role of user.roles" class="badge bg-secondary me-1">{{role}}</span>
       </td>
       <td>
-        <button class="btn btn-sm btn-outline-warning" (click)="toggleEnabled(user)">
+        <button class="btn btn-sm btn-outline-warning me-1" (click)="toggleEnabled(user)">
           Toggle Enabled
         </button>
-        <button class="btn btn-sm btn-outline-danger" (click)="deleteUser(user)">
+        <button class="btn btn-sm btn-outline-danger me-1" (click)="deleteUser(user)">
           Delete
         </button>
+        <a [routerLink]="['/admin/edit-user', user.id]" class="btn btn-sm btn-outline-primary">
+          Edit
+        </a>
       </td>
+    </tr>
     </tbody>
   </table>
 </div>
