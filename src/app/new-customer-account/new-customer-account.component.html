@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="card col-md-6 offset-md-3 mt-5 shadow-sm">
+    <div class="card-header bg-info text-white">
+      <h5 class="mb-0">New Customer</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="newBankAccountFormGroup" (ngSubmit)="handleSaveCustomerBankAccount()" novalidate>
+
+        <!-- Type field -->
+        <div class="mb-3">
+          <label class="form-label d-block">Account Type:</label>
+          <div class="btn-group" role="group" aria-label="Operation types">
+            <input
+              type="radio"
+              class="btn-check"
+              id="savingRadio"
+              value="saving"
+              formControlName="accountType"
+              autocomplete="off"
+            />
+            <label class="btn btn-outline-success" for="savingRadio">Saving Account</label>
+
+            <input
+              type="radio"
+              class="btn-check"
+              id="currentRadio"
+              value="current"
+              formControlName="accountType"
+              autocomplete="off"
+            />
+            <label class="btn btn-outline-success" for="currentRadio">Credit Account</label>
+          </div>
+        </div>
+        <!-- balance field -->
+        <div class="mb-3">
+          <label for="emailInput" class="form-label">Initiale Balance</label>
+          <input
+            id="emailInput"
+            type="number"
+            class="form-control"
+            formControlName="balance"
+            placeholder="Initiale Balance"
+          />
+          </div>
+
+        <div class="mb-3" *ngIf="newBankAccountFormGroup.value.accountType=='current'">
+          <label for="overdraftInput" class="form-label">OverDraft</label>
+          <input
+            id="overdraftInput"
+            type="number"
+            class="form-control"
+            formControlName="overDraft"
+            placeholder="OverDraft"
+          />
+        </div>
+        <div class="mb-3" *ngIf="newBankAccountFormGroup.value.accountType=='saving'">
+          <label for="interestRateInput" class="form-label">Interest Rate</label>
+          <input
+            id="interestRateInput"
+            type="number"
+            class="form-control"
+            placeholder="Interest Rate"
+            formControlName="interestRate"
+          />
+        </div>
+        <!-- Save button -->
+        <div class="d-grid">
+          <button
+            type="submit"
+            class="btn btn-info"
+
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

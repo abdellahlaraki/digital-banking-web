@@ -1,0 +1,57 @@
+/* src/styles.css ou le CSS global de votre application */
+
+html, body {
+  height: 100%; /* Fait en sorte que html et body occupent toute la hauteur de la fenêtre */
+  margin: 0;    /* Supprime les marges par défaut des navigateurs */
+  padding: 0;   /* Supprime les paddings par défaut */
+  overflow: hidden; /* <-- TRÈS IMPORTANT : Empêche le défilement global de la page */
+}
+
+/* Styles pour le composant racine de votre application (App Component) */
+app-root {
+  display: flex; /* Utilise flexbox pour que le contenu puisse s'étirer */
+  flex-direction: column; /* Organise les éléments en colonne */
+  height: 100%; /* Prend toute la hauteur disponible de son parent (body) */
+}
+
+.container {
+  flex-grow: 1; /* Permet au conteneur principal de s'étendre et d'occuper l'espace restant */
+  display: flex;
+  flex-direction: column; /* Pour organiser le contenu à l'intérieur */
+  justify-content: center; /* Centre le contenu verticalement (si vous avez un seul élément comme le graphique) */
+  align-items: center; /* Centre le contenu horizontalement */
+  padding: 20px; /* Un peu d'espace autour du contenu */
+  box-sizing: border-box; /* S'assure que padding n'ajoute pas à la taille totale */
+  overflow: hidden; /* Empêche le défilement si le contenu dépasse le container */
+}
+
+/* Si vous avez une barre de navigation */
+nav {
+  /* Donnez une hauteur fixe ou un padding */
+  flex-shrink: 0; /* Empêche la nav de rétrécir si l'espace est limité */
+  /* Exemple: height: 60px; background-color: #f8f9fa; */
+}
+/* src/app/dashboard/dashboard.component.css */
+
+.chart-container {
+  width: 80%; /* Ajustez la largeur selon vos besoins */
+  max-width: 900px; /* Limitez la largeur maximale pour les grands écrans */
+  height: 100%; /* Prendra toute la hauteur disponible du parent flex-grow:1 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centre le graphique verticalement */
+  align-items: center;     /* Centre le graphique horizontalement */
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-sizing: border-box; /* Important pour que le padding ne fasse pas déborder */
+  overflow: hidden; /* Cache tout ce qui déborde du conteneur du graphique */
+}
+
+/* Pour le canvas lui-même, il doit s'adapter à son conteneur */
+canvas {
+  max-height: 100%; /* S'assure que le canvas ne dépasse pas la hauteur du .chart-container */
+  max-width: 100%; /* S'assure que le canvas ne dépasse pas la largeur */
+}

@@ -1,0 +1,184 @@
+<div class="container my-4">
+  <div class="row g-4">
+    <!-- Left side: Account Search & Details -->
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-info text-white fw-semibold">
+          Accounts
+        </div>
+        <div class="card-body">
+
+          <!-- Search form -->
+          <form [formGroup]="accountFormGroup" (ngSubmit)="handleSearchAccount()" class="mb-4">
+            <div class="input-group">
+              <label class="input-group-text" for="accountIdInput">Account Id:</label>
+              <input
+                id="accountIdInput"
+                type="text"
+                formControlName="accountId"
+                class="form-control"
+                placeholder="Enter Account ID"
+                aria-label="Account Id"
+              />
+              <button class="btn btn-info" type="submit" aria-label="Search">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- Error & Loading -->
+          <ng-template #error_template>
+            <ng-container *ngIf="errorMessage; else loading">
+              <div class="alert alert-danger">{{ errorMessage }}</div>
+            </ng-container>
+            <ng-template #loading>
+              <div class="text-center py-3">
+                <div class="spinner-border text-info" role="status" aria-hidden="true"></div>
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </ng-template>
+          </ng-template>
+
+          <!-- Account details -->
+          <ng-container *ngIf="accountObservable | async as accountDetails; else error_template">
+            <div class="mb-3">
+              <strong>Account Id:</strong> {{ accountDetails.accountId }}
+            </div>
+            <div class="mb-3">
+              <strong>Balance:</strong> {{ accountDetails.balance | number: '1.2-2' }} USD
+            </div>
+
+            <!-- Operations table -->
+            <div class="table-responsive">
+              <table class="table table-striped table-hover align-middle">
+                <thead class="table-light">
+                <tr>
+                  <th>Id</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th class="text-end">Amount</th>
+                  <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let op of accountDetails.accountOperationDTOS">
+                  <td>{{ op.id }}</td>
+                  <td>{{ op.operationDate | date: 'dd-MM-yyyy' }}</td>
+                  <td>{{ op.type }}</td>
+                  <td class="text-end">{{ op.amount | number: '1.2-2' }}</td>
+                  <td>{{ op.description }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Account operations pagination" class="mt-3">
+              <ul class="pagination justify-content-center">
+                <li
+                  class="page-item"
+                  *ngFor="let _ of [].constructor(accountDetails.totalPages); let page = index"
+                  [class.active]="page === currentPage"
+                >
+                  <button class="page-link" (click)="goToPage(page)" [attr.aria-current]="page === currentPage ? 'page' : null">
+                    {{ page + 1 }}
+                  </button>
+                </li>
+              </ul>
+
+            </nav>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right side: Account Operations -->
+    <div class="col-md-6">
+      <div class="card shadow-sm" *ngIf="accountObservable">
+        <div class="card-header bg-success text-white fw-semibold">Operations</div>
+        <div class="card-body" *ngIf="authService.roles.includes('ADMIN')">
+          <form [formGroup]="operationFormGroup" (ngSubmit)="handleAccountOperation()" novalidate>
+            <div class="mb-3">
+              <label class="form-label d-block">Operation Type:</label>
+              <div class="btn-group" role="group" aria-label="Operation types">
+                <input
+                  type="radio"
+                  class="btn-check"
+                  formControlName="operationType"
+                  id="debitRadio"
+                  value="DEBIT"
+                  autocomplete="off"
+                />
+                <label class="btn btn-outline-success" for="debitRadio">DEBIT</label>
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  formControlName="operationType"
+                  id="creditRadio"
+                  value="CREDIT"
+                  autocomplete="off"
+                />
+                <label class="btn btn-outline-success" for="creditRadio">CREDIT</label>
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  formControlName="operationType"
+                  id="transferRadio"
+                  value="TRANSFER"
+                  autocomplete="off"
+                />
+                <label class="btn btn-outline-success" for="transferRadio">TRANSFER</label>
+              </div>
+            </div>
+
+            <div class="mb-3" *ngIf="operationFormGroup.value.operationType === 'TRANSFER'">
+              <label for="accountDestInput" class="form-label">Account Destination:</label>
+              <input
+                id="accountDestInput"
+                type="text"
+                formControlName="accountDestination"
+                class="form-control"
+                placeholder="Destination Account ID"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="amountInput" class="form-label">Amount:</label>
+              <input
+                id="amountInput"
+                type="number"
+                formControlName="amount"
+                class="form-control"
+                placeholder="Enter amount"
+                min="0"
+                step="0.01"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="descInput" class="form-label">Description:</label>
+              <input
+                id="descInput"
+                type="text"
+                formControlName="description"
+                class="form-control"
+                placeholder="Optional description"
+              />
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success" [disabled]="operationFormGroup.invalid">
+                Save Operation
+              </button>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="!authService.roles.includes('ADMIN')" class="card-body text-muted">
+          You do not have permission to perform operations.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+/* accounts.component.css */
+
+/* Ensure the pagination container itself can handle overflow */
+.card-body {
+  overflow-x: auto; /* Allow horizontal overflow with a scrollbar */
+  /* You might also consider padding-bottom if the pagination is too close to the bottom edge */
+  padding-bottom: 1.5rem; /* Example: Add some space below content */
+}
+
+/* Style for the pagination navigation */
+.pagination {
+  /* Removed flex-wrap: wrap; to prevent wrapping and allow horizontal scroll */
+  justify-content: center; /* Center the pagination links */
+  margin-left: -0.25rem; /* Adjust for potential negative margin from page-item */
+  margin-right: -0.25rem; /* Adjust for potential negative margin from page-item */
+  white-space: nowrap; /* Keep all pagination items on a single line */
+}
+
+/* Style for individual page items */
+.page-item {
+  margin: 0 0.25rem; /* Add some horizontal spacing between page items */
+  /* Removed margin-bottom as items will no longer wrap */
+}
+
+/* Style for page links/buttons */
+.page-link {
+  border-radius: 0.5rem; /* Rounded corners for page links */
+  padding: 0.5rem 0.75rem; /* Adjust padding for better look */
+  min-width: 2.5rem; /* Ensure a minimum width for consistent button size */
+  text-align: center; /* Center text within the button */
+}
+
+/* Active page styling */
+.page-item.active .page-link {
+  background-color: #17a2b8; /* Info color from your header */
+  border-color: #17a2b8;
+  color: white;
+}
+
+/* Disabled page styling */
+.page-item.disabled .page-link {
+  color: #6c757d; /* Muted color for disabled links */
+  pointer-events: none; /* Disable click events */
+  background-color: #e9ecef; /* Light background for disabled */
+  border-color: #dee2e6;
+}
+
+/* Responsive adjustments for smaller screens (optional, but good practice) */
+@media (max-width: 767.98px) {
+  .pagination {
+    /* Further adjustments for very small screens if needed */
+  }
+  .page-item {
+    margin: 0 0.15rem; /* Reduce margin for very narrow screens */
+    /* Removed margin-bottom here too */
+  }
+  .page-link {
+    padding: 0.4rem 0.6rem;
+    min-width: 2rem;
+  }
+}

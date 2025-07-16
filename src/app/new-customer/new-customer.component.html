@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="card col-md-6 offset-md-3 mt-5 shadow-sm">
+    <div class="card-header bg-info text-white">
+      <h5 class="mb-0">New Customer</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="newCustomerFormGroup" (ngSubmit)="handleSaveCustomer()" novalidate>
+
+        <!-- Name field -->
+        <div class="mb-3">
+          <label for="nameInput" class="form-label">Name</label>
+          <input
+            id="nameInput"
+            type="text"
+            formControlName="name"
+            class="form-control"
+            [class.is-invalid]="
+              newCustomerFormGroup.controls['name']?.touched &&
+              newCustomerFormGroup.controls['name']?.invalid
+            "
+            placeholder="Enter full name"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="
+              newCustomerFormGroup.controls['name']?.touched &&
+              newCustomerFormGroup.controls['name']?.errors?.['required']
+            "
+          >
+            Name is required.
+          </div>
+        </div>
+
+        <!-- Email field -->
+        <div class="mb-3">
+          <label for="emailInput" class="form-label">Email</label>
+          <input
+            id="emailInput"
+            type="email"
+            formControlName="email"
+            class="form-control"
+            [class.is-invalid]="
+              newCustomerFormGroup.controls['email']?.touched &&
+              newCustomerFormGroup.controls['email']?.invalid
+            "
+            placeholder="Enter email address"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="
+              newCustomerFormGroup.controls['email']?.touched &&
+              newCustomerFormGroup.controls['email']?.errors?.['required']
+            "
+          >
+            Email is required.
+          </div>
+          <div
+            class="invalid-feedback"
+            *ngIf="
+              newCustomerFormGroup.controls['email']?.touched &&
+              newCustomerFormGroup.controls['email']?.errors?.['email']
+            "
+          >
+            Please enter a valid email address.
+          </div>
+        </div>
+
+        <!-- Save button -->
+        <div class="d-grid">
+          <button
+            type="submit"
+            class="btn btn-info"
+            [disabled]="newCustomerFormGroup.invalid"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

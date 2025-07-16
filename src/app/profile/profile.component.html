@@ -1,0 +1,51 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">User Profile</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Username:</strong> admin</li>
+            <li class="list-group-item">
+              <strong>Enabled:</strong>
+              <span class="badge bg-success">Yes</span>
+            </li>
+            <li class="list-group-item">
+              <strong>Roles:</strong>
+              <span class="badge bg-secondary me-1">USER</span>
+              <span class="badge bg-secondary">ADMIN</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 🔐 Password Change Section -->
+        <div class="card-body border-top">
+          <h6 class="mb-3">Changer le mot de passe</h6>
+          <form (ngSubmit)="changePassword()" #passwordForm="ngForm">
+            <div class="mb-3">
+              <label for="oldPassword" class="form-label">Ancien mot de passe</label>
+              <input type="password" class="form-control" id="oldPassword"
+                     [(ngModel)]="passwordData.oldPassword" name="oldPassword" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">Nouveau mot de passe</label>
+              <input type="password" class="form-control" id="newPassword"
+                     [(ngModel)]="passwordData.newPassword" name="newPassword" required>
+            </div>
+
+            <button type="submit" class="btn btn-outline-primary w-100" [disabled]="passwordForm.invalid">
+              Mettre à jour le mot de passe
+            </button>
+          </form>
+
+          <div *ngIf="passwordMessage" class="alert alert-info mt-3">
+            {{ passwordMessage }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
